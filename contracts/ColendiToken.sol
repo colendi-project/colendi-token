@@ -1,21 +1,19 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.5.0;
 
-import 'openzeppelin-solidity/contracts/token/ERC20/StandardToken.sol';
+import 'openzeppelin-solidity/contracts/token/ERC20/ERC20.sol';
 
-contract ColendiToken is StandardToken {
+contract ColendiToken is ERC20 {
 
     string public name = 'Colendi Token';
 
     string public symbol = 'COD';
 
-    uint8 public decimals = 3;
+    uint8 public decimals = 18;
 
-    uint256 public constant INITIAL_SUPPLY = 200000000 * (10 ** uint256(decimals));
+    uint256 public INITIAL_SUPPLY = 200000000 * (10 ** uint256(decimals));
 
-    function ColendiToken() public {
-        totalSupply_ = INITIAL_SUPPLY;
-        balances[msg.sender] = INITIAL_SUPPLY;
-        emit Transfer(0x0, msg.sender, INITIAL_SUPPLY);
+    constructor() public {
+        _mint(msg.sender, INITIAL_SUPPLY);      
     }
 
 }
