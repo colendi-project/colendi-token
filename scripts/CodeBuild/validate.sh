@@ -21,7 +21,7 @@ apiPath="contract/detail/token"
 checkUrl="https://$contractUrl/$apiPath"
 
 # API status check
-result=$(curl -s -o /dev/null -I -w "%{http_code}" "$checkURL")
+result=$(curl -s -o /dev/null -I -w "%{http_code}" "$checkUrl")
 if [[ "${result:0:1}" =~ "0" ]]; then
     printf 'Validation failed with error code "%d"\n' "$?" >&2
     exit 1
