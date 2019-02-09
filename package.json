@@ -4,12 +4,20 @@
   "description": "Colendi ERC-20 Token",
   "main": "truffle.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "NODE_ENV=dev node utils/setEnv.js",
+    "start:stage": "NODE_ENV=stage node utils/setEnv.js ",
+    "start:prod": "NODE_ENV=prod node utils/setEnv.js"
   },
   "author": "Colendi",
   "license": "Apache-2.0",
   "dependencies": {
-    "openzeppelin-solidity": "^1.9.0",
-    "truffle-hdwallet-provider-privkey": "^0.2.0"
+    "aws-sdk": "^2.395.0",
+    "clean-deep": "^3.0.2",
+    "minimist": "^1.2.0",
+    "openzeppelin-solidity": "^2.1.2",
+    "shelljs": "^0.8.3",
+    "truffle": "^5.0.3",
+    "truffle-hdwallet-provider": "^1.0.3"
   }
 }
