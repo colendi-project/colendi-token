@@ -15,7 +15,7 @@ module.exports = function (deployer) {
       const params = {
         TableName: process.env.CONTRACTS_TABLE,
         Item: {
-          contractName: "test-token",
+          contractName: "token",
           contractAddress: _instance.address,
           contractABI: cleanDeep(_instance.abi),
           providerID: deployer.network_id,
