@@ -12,12 +12,13 @@ module.exports = function (deployer) {
     .then(async (_instance) => {
       const currentStage = argv['env'];
       await envVars.getEnvironmentVariables(currentStage);
+      const _abi = JSON.parse(JSON.stringify(_instance.abi).replace("\"\"",null))
       const params = {
         TableName: process.env.CONTRACTS_TABLE,
         Item: {
           contractName: "token",
           contractAddress: _instance.address,
-          contractABI: cleanDeep(_instance.abi),
+          contractABI: _abi,
           providerID: deployer.network_id,
           providerKey: process.env.INFURA_KEY_KOVAN,
           providerURL: process.env.INFURA_URL_KOVAN,
