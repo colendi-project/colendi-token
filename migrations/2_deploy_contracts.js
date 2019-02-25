@@ -3,7 +3,6 @@ const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB({ region: 'us-east-1' });
 const client = new AWS.DynamoDB.DocumentClient({ service: dynamodb });
 const envVars = require('../utils/getEnv');
-const cleanDeep = require('clean-deep')
 const argv = require('minimist')(process.argv.slice(2), { string: ['env'] });
 
 module.exports = function (deployer) {
