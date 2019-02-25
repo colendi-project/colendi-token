@@ -11,7 +11,13 @@ module.exports = function (deployer) {
     .then(async (_instance) => {
       const currentStage = argv['env'];
       await envVars.getEnvironmentVariables(currentStage);
-      const _abi = JSON.parse(JSON.stringify(_instance.abi).replace("\"\"",null))
+      const outABI = JSON.stringify(_instance.abi, function(key, value) {
+        if(value === "") {
+            return null
+        }    
+        return value;
+    });      
+    const _abi = JSON.parse(outABI)
       const params = {
         TableName: process.env.CONTRACTS_TABLE,
         Item: {
