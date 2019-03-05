@@ -23,12 +23,17 @@ async function setEnvironmentVariables() {
         currentStage,
         "GAS_AMOUNT"
     ));
+    const CONTRACTS_TABLE = await parameterUtil.getParameter(
+        currentStage,
+        "CONTRACTS_TABLE"
+    );
 
     process.env["MNEMONIC"] = MNEMONIC;
     process.env["INFURA_URL_KOVAN"] = INFURA_URL_KOVAN;
     process.env["INFURA_KEY_KOVAN"] = INFURA_KEY_KOVAN;
     process.env["gasPrice"] = gasPrice;
     process.env["gasAmount"] = gasAmount;
+    process.env["CONTRACTS_TABLE"] = CONTRACTS_TABLE;
 
 }
 (async () => {
