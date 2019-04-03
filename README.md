@@ -39,7 +39,7 @@ The features of Colendi Token are as follows:
 |  Name | Colendi Token |
 | Symbol | COD |
 | Decimal | 18 |
-| Supply | 200000000 |
+| Supply | 2000000000 |
 
 ## Getting Started
 
