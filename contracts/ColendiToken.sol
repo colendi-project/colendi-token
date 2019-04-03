@@ -10,7 +10,7 @@ contract ColendiToken is ERC20 {
 
     uint8 public decimals = 18;
 
-    uint256 public INITIAL_SUPPLY = 200000000 * (10 ** uint256(decimals));
+    uint256 public INITIAL_SUPPLY = 2e9 * (10 ** uint256(decimals));
 
     constructor() public {
         _mint(msg.sender, INITIAL_SUPPLY);      
