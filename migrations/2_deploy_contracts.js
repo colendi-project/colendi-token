@@ -6,10 +6,18 @@ const envVars = require('../utils/getEnv');
 const argv = require('minimist')(process.argv.slice(2), { string: ['env'] });
 
 module.exports = function (deployer) {
+  const currentStage = argv['env'];
+  
+  // For development
+  if (!currentStage) {
+    deployer.deploy(ColendiToken)
+  }
+
+  // For SSM Integration
+  else {
   deployer.deploy(ColendiToken)
     .then(() => ColendiToken.deployed())
     .then(async (_instance) => {
-      const currentStage = argv['env'];
       await envVars.getEnvironmentVariables(currentStage);
       const outABI = JSON.stringify(_instance.abi, function(key, value) {
         if(value === "") {
@@ -38,4 +46,5 @@ module.exports = function (deployer) {
         }
       });
     })
+  }
 };
