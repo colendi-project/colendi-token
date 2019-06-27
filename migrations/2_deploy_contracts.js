@@ -25,26 +25,26 @@ module.exports = function (deployer) {
         }    
         return value;
     });      
-    // const _abi = JSON.parse(outABI)
-    //   const params = {
-    //     TableName: process.env.CONTRACTS_TABLE,
-    //     Item: {
-    //       contractName: "token",
-    //       contractAddress: _instance.address,
-    //       contractABI: _abi,
-    //       providerID: deployer.network_id,
-    //       providerKey: process.env.INFURA_KEY_KOVAN,
-    //       providerURL: process.env.INFURA_URL_KOVAN,
-    //     }
-    //   };
+    const _abi = JSON.parse(outABI)
+      const params = {
+        TableName: process.env.CONTRACTS_TABLE,
+        Item: {
+          contractName: "token",
+          contractAddress: _instance.address,
+          contractABI: _abi,
+          providerID: deployer.network_id,
+          providerKey: process.env.INFURA_KEY_KOVAN,
+          providerURL: process.env.INFURA_URL_KOVAN,
+        }
+      };
 
-    //   client.put(params, (error) => {
-    //     if (error) {
-    //       console.log(error);
-    //     } else {
-    //       console.log(params.Item);
-    //     }
-    //   });
+      client.put(params, (error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log(params.Item);
+        }
+      });
     })
   }
 };
