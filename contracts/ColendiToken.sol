@@ -7,9 +7,9 @@ contract ColendiToken is ERC20 {
 
     using ECRecovery for bytes32;
 
-    string public name = 'Zakkum Token';
+    string public name = 'Colendi Token';
 
-    string public symbol = 'ZAK';
+    string public symbol = 'COD';
 
     uint8 public decimals = 18;
 
