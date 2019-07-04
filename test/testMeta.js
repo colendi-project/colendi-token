@@ -12,6 +12,8 @@ const {
 } = constants;
 
 const ColendiToken = artifacts.require("ColendiToken");
+const Dummy = artifacts.require("Dummy");
+
 
 contract("ColendiToken", (accounts) => {
 
@@ -23,6 +25,7 @@ contract("ColendiToken", (accounts) => {
 
     beforeEach(async function () {
         this.token = await ColendiToken.new();
+        this.dummy = await Dummy.new(this.token.address);
     });
 
     describe('metaTransfer', async () => {
@@ -60,5 +63,46 @@ contract("ColendiToken", (accounts) => {
         })
 
     });
+
+    describe('metaApproveAndCall', async () => {
+
+        it('initially nonce should be 0', async function () {
+            const nonce = await this.token.currentNonce(etherlessAddress);
+            expect(nonce).to.be.bignumber.equal('0')
+        })
+
+        it('successfuly approve and call', async function () {
+            const nonce = await this.token.currentNonce(etherlessAddress);
+            const baseAmount = new BN(4).mul(new BN(10).pow(new BN(18)));
+            await this.token.transfer(etherlessAddress, baseAmount, {
+                from: owner
+            });
+            const data = this.dummy.contract.methods.setValue(etherlessAddress, 200).encodeABI();
+
+            const rewardAmount = baseAmount.divn(2);
+            const method = "metaApproveAndCall"
+            
+            const args = [
+                this.dummy.address,
+                web3.utils.toTwosComplement(rewardAmount),
+                data,
+                web3.utils.toTwosComplement(nonce),
+                web3.utils.toTwosComplement(rewardAmount)
+            ]
+
+            const messageHash = web3.utils.soliditySha3(this.token.address, method , ...args);
+            const signature = etherlessAccount.sign(messageHash).signature;
+            
+
+            await this.token.metaApproveAndCall(signature, ...args, {
+                from: relayer,
+            })
+
+            expect(await this.dummy.random()).to.be.bignumber.equal('200')
+           
+        })
+
+    });
+
 
 })

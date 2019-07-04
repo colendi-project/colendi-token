@@ -83,10 +83,31 @@ contract ColendiToken is ERC20 {
     }
 
     function approveAndCall(address target, uint256 amount, bytes memory data) public returns(bool) {
-        approve(target, amount);
         bool isSucceed;
+        approve(target, amount);
         (isSucceed, ) = target.call(data);
         require(isSucceed, "Transaction has been reverted");
         return true;
+    }
+
+
+    function metaApproveAndCall(bytes memory signature, address target, uint256 amount, bytes memory data, uint256 nonce, uint256 reward) public returns (bool) {
+        bool isSucceed;
+        bytes32 metaHash = metaApproveAndCallHash(target,amount,data,nonce,reward);
+        address signer = metaHash.recover(signature);
+        require(signer!=address(0));
+        require(nonce == currentNonce[signer]);
+        currentNonce[signer]++;
+        _approve(signer, target, amount);
+        (isSucceed, ) = target.call(data);
+        require(isSucceed, "Transaction has been reverted");
+        if(reward>0){
+            _transfer(signer, msg.sender, reward);
+        }
+        return true;
+
+    }
+    function metaApproveAndCallHash(address target, uint256 amount, bytes memory data, uint256 nonce, uint256 reward) public view returns(bytes32){
+        return keccak256(abi.encodePacked(address(this),"metaApproveAndCall", target, amount, data, nonce, reward));
     }
 }
