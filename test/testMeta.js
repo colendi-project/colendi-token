@@ -51,7 +51,7 @@ contract("ColendiToken", (accounts) => {
                 web3.utils.toTwosComplement(rewardAmount)
             ]
 
-            const messageHash = web3.utils.soliditySha3(this.token.address, method , ...args);
+            const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
             const signature = etherlessAccount.sign(messageHash).signature;
 
             await this.token.metaTransfer(signature, ...args, {
@@ -81,7 +81,7 @@ contract("ColendiToken", (accounts) => {
 
             const rewardAmount = baseAmount.divn(2);
             const method = "metaApproveAndCall"
-            
+
             const args = [
                 this.dummy.address,
                 web3.utils.toTwosComplement(rewardAmount),
@@ -90,16 +90,54 @@ contract("ColendiToken", (accounts) => {
                 web3.utils.toTwosComplement(rewardAmount)
             ]
 
-            const messageHash = web3.utils.soliditySha3(this.token.address, method , ...args);
+            const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
             const signature = etherlessAccount.sign(messageHash).signature;
-            
+
 
             await this.token.metaApproveAndCall(signature, ...args, {
                 from: relayer,
             })
 
             expect(await this.dummy.random()).to.be.bignumber.equal('200')
-           
+
+        })
+
+    });
+
+    describe('When sender does not have enough balance', async () => {
+
+
+        it('transfer fails', async function () {
+            const nonce = await this.token.currentNonce(etherlessAddress);
+            const baseAmount = new BN(0);
+            await this.token.transfer(etherlessAddress, baseAmount, {
+                from: owner
+            });
+            const transferAmount = new BN(9e7)
+            const rewardAmount = new BN(1e7)
+            const method = "metaTransfer"
+            const args = [
+                receiver,
+                web3.utils.toTwosComplement(transferAmount),
+                web3.utils.toTwosComplement(nonce),
+                web3.utils.toTwosComplement(rewardAmount)
+            ]
+
+            const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
+            const signature = etherlessAccount.sign(messageHash).signature;
+
+            await this.token.metaTransfer(signature, ...args, {
+                from: relayer,
+            })
+            // expect(await this.token.balanceOf(etherlessAddress)).to.be.bignumber.equal('0')
+            // expect(await this.token.balanceOf(relayer)).to.be.bignumber.equal(rewardAmount)
+            // expect(await this.token.balanceOf(receiver)).to.be.bignumber.equal(transferAmount)
+            const amount = transferAmount.addn(1);
+            it('reverts', async function () {
+                await shouldFail.reverting(this.token.metaTransfer(to, amount, {
+                    from: owner
+                }));
+            });
         })
 
     });
