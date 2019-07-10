@@ -7,7 +7,20 @@
 
 # Colendi Token
 
-Colendi Token is a ERC-20 token which is built using zeppelin ERC-20 contract. 
+Colendi Token is a ERC-20 token which is built based on open-zeppelin ERC-20 contract. Colendi platform aims to provide a better User Experience for end-users. Whereas, on Ethereum users are asked to have Ether in addition to any utility tokens. Mass adoption of blockchains requires frictionless user onboarding. There has been lots of proposals on this purporse like 
+
+  * ERC-1776 by Austin Griffith - Native Meta Transactions
+  * ERC-865 Pay transfers in tokens instead of gas
+  * ERC-827 The execution of calls inside transfer and approvals
+  * ERC-677 Transfer and Call
+
+In addition to these proposals, the organizations are built like The Gas Station Network Alliance. Colendi aims to facilitate the interactions of the user with the extended version of ERC-20. Our extensions are as follows : 
+
+  * approveAndCall
+  * metaTransfer
+  * metaTransferFrom
+  * metaApprove
+  * metaApproveAndCall
 
 ![Generic badge](https://img.shields.io/badge/maintained-yes-green.svg)
 
@@ -17,18 +30,24 @@ Colendi Token is a ERC-20 token which is built using zeppelin ERC-20 contract.
 |  Mainnet | TBA |
 | Kovan | 0x8375383B58124E6e76Fc422FF8014Ef6Ad1382E7 |
 
-- [Colendi Token](#colendi-token)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Getting Started](#getting-started)
-    - [Without Continous Integration](#without-continous-integration)
-    - [Enabling Continous Integration](#enabling-continous-integration)
-    - [Prerequisites](#prerequisites)
-    - [Related Docs](#related-docs)
-  - [API Reference](#api-reference)
-  - [Contribution](#contribution)
-    - [Issues & Feedback](#issues--feedback)
-  - [License](#license)
+- [Colendi Token](#Colendi-Token)
+  - [Table of Contents](#Table-of-Contents)
+  - [Features](#Features)
+    - [Methods](#Methods)
+      - [metaTransfer](#metaTransfer)
+      - [metaApprove](#metaApprove)
+      - [metaTransferFrom](#metaTransferFrom)
+      - [approveAndCall](#approveAndCall)
+      - [metaApproveAndCall](#metaApproveAndCall)
+  - [Getting Started](#Getting-Started)
+    - [Without Continous Integration](#Without-Continous-Integration)
+    - [Enabling Continous Integration](#Enabling-Continous-Integration)
+    - [Prerequisites](#Prerequisites)
+    - [Related Docs](#Related-Docs)
+  - [API Reference](#API-Reference)
+  - [Contribution](#Contribution)
+    - [Issues & Feedback](#Issues--Feedback)
+  - [License](#License)
 
 ## Features
 
@@ -40,6 +59,28 @@ The features of Colendi Token are as follows:
 | Symbol | COD |
 | Decimal | 18 |
 | Supply | 2000000000 |
+
+### Methods
+
+#### metaTransfer
+
+This method is based on Austin Griffith's [native-meta-transaction](https://github.com/austintgriffith/native-meta-transactions). It allows transferring COD tokens without having ETH. The transaction fee is paid in terms of COD to relayer and the relayer routes signed transaction to contract covering fee.
+
+#### metaApprove
+
+This method allows providing access to anyone for some amount of tokens owned by the user. Currently, most of utility tokens follow approve and transferFrom pattern. Yet it is proven to be secure so far, the user requires ETH to cover at least 2 transactions on network. With this function, user can be less affected of fluctating Transaction fees. 
+
+#### metaTransferFrom
+
+This method allows transferring COD tokens without having ETH on behalf of someone. It would be useful for some decentralized applications. The transaction fee is paid in terms of COD to relayer and the relayer routes signed transaction to contract covering fee.
+
+#### approveAndCall 
+
+This method is a replacement for approve & transferFrom pattern. In this case, the user can directly execute the same functionality in just one transaction. 
+
+#### metaApproveAndCall
+
+This methods allows executing approveAndCall method without having ETH. 
 
 ## Getting Started
 
