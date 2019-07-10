@@ -53,9 +53,10 @@ contract("ColendiToken", (accounts) => {
                 ]
 
                 const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
-                const signature = etherlessAccount.sign(messageHash).signature;
+                let signature = etherlessAccount.sign(messageHash);
+                signature = getSignatureInLowerRange(signature);
 
-                await this.token.metaTransfer(signature, ...args, {
+                await this.token.metaTransfer(signature.signature, ...args, {
                     from: relayer,
                 })
                 expect(await this.token.balanceOf(etherlessAddress)).to.be.bignumber.equal('0')
@@ -82,10 +83,11 @@ contract("ColendiToken", (accounts) => {
                 ]
 
                 const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
-                const signature = etherlessAccount.sign(messageHash).signature;
+                let signature = etherlessAccount.sign(messageHash);
+                signature = getSignatureInLowerRange(signature);
 
                 it('reverts', async function () {
-                    await shouldFail.reverting(this.token.metaTransfer(signature, ...args, {
+                    await shouldFail.reverting(this.token.metaTransfer(signature.signature, ...args, {
                         from: relayer
                     }));
                 });
@@ -116,9 +118,10 @@ contract("ColendiToken", (accounts) => {
                 ]
 
                 const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
-                const signature = etherlessAccount.sign(messageHash).signature;
+                let signature = etherlessAccount.sign(messageHash);
+                signature = getSignatureInLowerRange(signature);
 
-                await this.token.metaApprove(signature, ...args, {
+                await this.token.metaApprove(signature.signature, ...args, {
                     from: relayer,
                 })
 
@@ -147,9 +150,6 @@ contract("ColendiToken", (accounts) => {
                     from: owner
                 });
 
-                const allowance = await this.token.allowance(owner,etherlessAddress)
-                const balance = await this.token.balanceOf(etherlessAddress)
-
                 const method = "metaTransferFrom"
                 const args = [
                     owner,
@@ -160,9 +160,10 @@ contract("ColendiToken", (accounts) => {
                 ]
 
                 const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
-                const signature = etherlessAccount.sign(messageHash).signature;
-
-                await this.token.metaTransferFrom(signature, ...args, {
+                let signature = etherlessAccount.sign(messageHash);
+                signature = getSignatureInLowerRange(signature);
+                
+                await this.token.metaTransferFrom(signature.signature, ...args, {
                     from: relayer,
                 })
                 expect(await this.token.balanceOf(receiver)).to.be.bignumber.equal(transferAmount)
@@ -195,10 +196,10 @@ contract("ColendiToken", (accounts) => {
             ]
 
             const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
-            const signature = etherlessAccount.sign(messageHash).signature;
+            let signature = etherlessAccount.sign(messageHash);
+            signature = getSignatureInLowerRange(signature);
 
-
-            await this.token.metaApproveAndCall(signature, ...args, {
+            await this.token.metaApproveAndCall(signature.signature, ...args, {
                 from: relayer,
             })
 
@@ -211,3 +212,18 @@ contract("ColendiToken", (accounts) => {
 
 
 })
+
+
+function getSignatureInLowerRange(signature) {
+    const upperRange = 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0
+    const bound = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
+    if(signature.s > upperRange){
+        console.log("...updating signature")
+        console.log("signature Before : ", signature);
+        signature.s = bound - signature.s;
+        signature.v = signature.v == 0x1b ? 0x1c : 0x1b
+        console.log("signature After : ", signature);
+
+    }
+    return signature;
+}
