@@ -10,11 +10,13 @@ module.exports = function (deployer) {
   
   // For development
   if (!currentStage) {
+    console.log("Deploying on Development")
     deployer.deploy(ColendiToken)
   }
 
   // For SSM Integration
   else {
+  console.log("Deploying with SSM Integration")
   deployer.deploy(ColendiToken)
     .then(() => ColendiToken.deployed())
     .then(async (_instance) => {
