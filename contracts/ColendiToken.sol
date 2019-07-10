@@ -67,7 +67,7 @@ contract ColendiToken is ERC20 {
         require(nonce == currentNonce[signer]);
         currentNonce[signer]++;
         uint256 allowed = allowance(sender,signer);
-        _transfer(signer, receipent, value);
+        _transfer(sender, receipent, value);
         _approve(sender, signer, allowed.sub(value));
         if(reward>0){
             _transfer(signer, msg.sender, reward);
