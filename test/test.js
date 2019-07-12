@@ -1,11 +1,20 @@
-const { BN, constants, expectEvent, shouldFail } = require('openzeppelin-test-helpers');
-const { expect } = require('chai');
-const { ZERO_ADDRESS } = constants;
+const {
+  BN,
+  constants,
+  expectEvent,
+  shouldFail
+} = require('openzeppelin-test-helpers');
+const {
+  expect
+} = require('chai');
+const {
+  ZERO_ADDRESS
+} = constants;
 
 const ColendiToken = artifacts.require("ColendiToken");
 
 contract("ColendiToken", (accounts) => {
-  const tokenAmount = new BN(2e9)
+  const tokenAmount = new BN(1e9)
   const powData = new BN(10)
   const decimals = new BN(18)
   const initialSupply = tokenAmount.mul(powData.pow(decimals))
@@ -46,7 +55,9 @@ contract("ColendiToken", (accounts) => {
         const amount = initialSupply.addn(1);
 
         it('reverts', async function () {
-          await shouldFail.reverting(this.token.transfer(to, amount, { from: owner }));
+          await shouldFail.reverting(this.token.transfer(to, amount, {
+            from: owner
+          }));
         });
       });
 
@@ -54,7 +65,9 @@ contract("ColendiToken", (accounts) => {
         const amount = initialSupply;
 
         it('transfers the requested amount', async function () {
-          await this.token.transfer(to, amount, { from: owner });
+          await this.token.transfer(to, amount, {
+            from: owner
+          });
 
           expect(await this.token.balanceOf(owner)).to.be.bignumber.equal('0');
 
@@ -62,7 +75,11 @@ contract("ColendiToken", (accounts) => {
         });
 
         it('emits a transfer event', async function () {
-          const { logs } = await this.token.transfer(to, amount, { from: owner });
+          const {
+            logs
+          } = await this.token.transfer(to, amount, {
+            from: owner
+          });
 
           expectEvent.inLogs(logs, 'Transfer', {
             from: owner,
@@ -77,7 +94,9 @@ contract("ColendiToken", (accounts) => {
       const to = ZERO_ADDRESS;
 
       it('reverts', async function () {
-        await shouldFail.reverting(this.token.transfer(to, initialSupply, { from: owner }));
+        await shouldFail.reverting(this.token.transfer(to, initialSupply, {
+          from: owner
+        }));
       });
     });
   });
@@ -90,14 +109,18 @@ contract("ColendiToken", (accounts) => {
 
       describe('when the spender has enough approved balance', function () {
         beforeEach(async function () {
-          await this.token.approve(spender, initialSupply, { from: owner });
+          await this.token.approve(spender, initialSupply, {
+            from: owner
+          });
         });
 
         describe('when the initial holder has enough balance', function () {
           const amount = initialSupply;
 
           it('transfers the requested amount', async function () {
-            await this.token.transferFrom(owner, to, amount, { from: spender });
+            await this.token.transferFrom(owner, to, amount, {
+              from: spender
+            });
 
             expect(await this.token.balanceOf(owner)).to.be.bignumber.equal('0');
 
@@ -105,13 +128,19 @@ contract("ColendiToken", (accounts) => {
           });
 
           it('decreases the spender allowance', async function () {
-            await this.token.transferFrom(owner, to, amount, { from: spender });
+            await this.token.transferFrom(owner, to, amount, {
+              from: spender
+            });
 
             expect(await this.token.allowance(owner, spender)).to.be.bignumber.equal('0');
           });
 
           it('emits a transfer event', async function () {
-            const { logs } = await this.token.transferFrom(owner, to, amount, { from: spender });
+            const {
+              logs
+            } = await this.token.transferFrom(owner, to, amount, {
+              from: spender
+            });
 
             expectEvent.inLogs(logs, 'Transfer', {
               from: owner,
@@ -121,7 +150,11 @@ contract("ColendiToken", (accounts) => {
           });
 
           it('emits an approval event', async function () {
-            const { logs } = await this.token.transferFrom(owner, to, amount, { from: spender });
+            const {
+              logs
+            } = await this.token.transferFrom(owner, to, amount, {
+              from: spender
+            });
 
             expectEvent.inLogs(logs, 'Approval', {
               owner: owner,
@@ -135,21 +168,27 @@ contract("ColendiToken", (accounts) => {
           const amount = initialSupply.addn(1);
 
           it('reverts', async function () {
-            await shouldFail.reverting(this.token.transferFrom(owner, to, amount, { from: spender }));
+            await shouldFail.reverting(this.token.transferFrom(owner, to, amount, {
+              from: spender
+            }));
           });
         });
       });
 
       describe('when the spender does not have enough approved balance', function () {
         beforeEach(async function () {
-          await this.token.approve(spender, initialSupply.subn(1), { from: owner });
+          await this.token.approve(spender, initialSupply.subn(1), {
+            from: owner
+          });
         });
 
         describe('when the initial holder has enough balance', function () {
           const amount = initialSupply;
 
           it('reverts', async function () {
-            await shouldFail.reverting(this.token.transferFrom(owner, to, amount, { from: spender }));
+            await shouldFail.reverting(this.token.transferFrom(owner, to, amount, {
+              from: spender
+            }));
           });
         });
 
@@ -157,7 +196,9 @@ contract("ColendiToken", (accounts) => {
           const amount = initialSupply.addn(1);
 
           it('reverts', async function () {
-            await shouldFail.reverting(this.token.transferFrom(owner, to, amount, { from: spender }));
+            await shouldFail.reverting(this.token.transferFrom(owner, to, amount, {
+              from: spender
+            }));
           });
         });
       });
@@ -168,11 +209,15 @@ contract("ColendiToken", (accounts) => {
       const to = ZERO_ADDRESS;
 
       beforeEach(async function () {
-        await this.token.approve(spender, amount, { from: owner });
+        await this.token.approve(spender, amount, {
+          from: owner
+        });
       });
 
       it('reverts', async function () {
-        await shouldFail.reverting(this.token.transferFrom(owner, to, amount, { from: spender }));
+        await shouldFail.reverting(this.token.transferFrom(owner, to, amount, {
+          from: spender
+        }));
       });
     });
   });
@@ -185,7 +230,11 @@ contract("ColendiToken", (accounts) => {
 
       describe('when the sender has enough balance', function () {
         it('emits an approval event', async function () {
-          const { logs } = await this.token.increaseAllowance(spender, amount, { from: owner });
+          const {
+            logs
+          } = await this.token.increaseAllowance(spender, amount, {
+            from: owner
+          });
 
           expectEvent.inLogs(logs, 'Approval', {
             owner: owner,
@@ -196,7 +245,9 @@ contract("ColendiToken", (accounts) => {
 
         describe('when there was no approved amount before', function () {
           it('approves the requested amount', async function () {
-            await this.token.increaseAllowance(spender, amount, { from: owner });
+            await this.token.increaseAllowance(spender, amount, {
+              from: owner
+            });
 
             expect(await this.token.allowance(owner, spender)).to.be.bignumber.equal(amount);
           });
@@ -204,11 +255,15 @@ contract("ColendiToken", (accounts) => {
 
         describe('when the spender had an approved amount', function () {
           beforeEach(async function () {
-            await this.token.approve(spender, new BN(1), { from: owner });
+            await this.token.approve(spender, new BN(1), {
+              from: owner
+            });
           });
 
           it('increases the spender allowance adding the requested amount', async function () {
-            await this.token.increaseAllowance(spender, amount, { from: owner });
+            await this.token.increaseAllowance(spender, amount, {
+              from: owner
+            });
 
             expect(await this.token.allowance(owner, spender)).to.be.bignumber.equal(amount.addn(1));
           });
@@ -219,7 +274,11 @@ contract("ColendiToken", (accounts) => {
         const amount = initialSupply.addn(1);
 
         it('emits an approval event', async function () {
-          const { logs } = await this.token.increaseAllowance(spender, amount, { from: owner });
+          const {
+            logs
+          } = await this.token.increaseAllowance(spender, amount, {
+            from: owner
+          });
 
           expectEvent.inLogs(logs, 'Approval', {
             owner: owner,
@@ -230,7 +289,9 @@ contract("ColendiToken", (accounts) => {
 
         describe('when there was no approved amount before', function () {
           it('approves the requested amount', async function () {
-            await this.token.increaseAllowance(spender, amount, { from: owner });
+            await this.token.increaseAllowance(spender, amount, {
+              from: owner
+            });
 
             expect(await this.token.allowance(owner, spender)).to.be.bignumber.equal(amount);
           });
@@ -238,11 +299,15 @@ contract("ColendiToken", (accounts) => {
 
         describe('when the spender had an approved amount', function () {
           beforeEach(async function () {
-            await this.token.approve(spender, new BN(1), { from: owner });
+            await this.token.approve(spender, new BN(1), {
+              from: owner
+            });
           });
 
           it('increases the spender allowance adding the requested amount', async function () {
-            await this.token.increaseAllowance(spender, amount, { from: owner });
+            await this.token.increaseAllowance(spender, amount, {
+              from: owner
+            });
 
             expect(await this.token.allowance(owner, spender)).to.be.bignumber.equal(amount.addn(1));
           });
@@ -254,7 +319,9 @@ contract("ColendiToken", (accounts) => {
       const spender = ZERO_ADDRESS;
 
       it('reverts', async function () {
-        await shouldFail.reverting(this.token.increaseAllowance(spender, amount, { from: owner }));
+        await shouldFail.reverting(this.token.increaseAllowance(spender, amount, {
+          from: owner
+        }));
       });
     });
   });
@@ -265,7 +332,9 @@ contract("ColendiToken", (accounts) => {
         const amount = supply;
 
         it('emits an approval event', async function () {
-          const { logs } = await approve.call(this, owner, spender, amount);
+          const {
+            logs
+          } = await approve.call(this, owner, spender, amount);
 
           expectEvent.inLogs(logs, 'Approval', {
             owner: owner,
@@ -299,7 +368,9 @@ contract("ColendiToken", (accounts) => {
         const amount = supply.addn(1);
 
         it('emits an approval event', async function () {
-          const { logs } = await approve.call(this, owner, spender, amount);
+          const {
+            logs
+          } = await approve.call(this, owner, spender, amount);
 
           expectEvent.inLogs(logs, 'Approval', {
             owner: owner,
@@ -339,9 +410,10 @@ contract("ColendiToken", (accounts) => {
 
   describe('approve', function () {
     testApprove(owner, receiver, initialSupply, function (owner, spender, amount) {
-      return this.token.approve(spender, amount, { from: owner });
+      return this.token.approve(spender, amount, {
+        from: owner
+      });
     });
   });
 
 });
-

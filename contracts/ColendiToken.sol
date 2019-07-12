@@ -1,11 +1,11 @@
 pragma solidity ^0.5.8;
 
 import 'openzeppelin-solidity/contracts/token/ERC20/ERC20.sol';
-import "./ECRecovery.sol";
+import "openzeppelin-solidity/contracts/cryptography/ECDSA.sol";
 
 contract ColendiToken is ERC20 {
 
-    using ECRecovery for bytes32;
+    using ECDSA for bytes32;
 
     string public name = 'Colendi Token';
 
@@ -38,7 +38,7 @@ contract ColendiToken is ERC20 {
 
     }
     function metaTransferHash(address to, uint256 value, uint256 nonce, uint256 reward) public view returns(bytes32){
-        return keccak256(abi.encodePacked(address(this),"metaTransfer", to, value, nonce, reward));
+        return keccak256(abi.encodePacked(address(this),"metaTransfer", to, value, nonce, reward)).toEthSignedMessageHash();
     }
 
     function metaApprove(bytes memory signature, address spender, uint256 value, uint256 nonce, uint256 reward) public returns (bool) {
@@ -56,7 +56,7 @@ contract ColendiToken is ERC20 {
 
     }
     function metaApproveHash(address spender, uint256 value, uint256 nonce, uint256 reward) public view returns(bytes32){
-        return keccak256(abi.encodePacked(address(this),"metaApprove", spender, value, nonce, reward));
+        return keccak256(abi.encodePacked(address(this),"metaApprove", spender, value, nonce, reward)).toEthSignedMessageHash();
     }
 
     function metaTransferFrom(bytes memory signature, address sender, address receipent, uint256 value, uint256 nonce, uint256 reward) public returns (bool) {
@@ -67,7 +67,7 @@ contract ColendiToken is ERC20 {
         require(nonce == currentNonce[signer]);
         currentNonce[signer]++;
         uint256 allowed = allowance(sender,signer);
-        _transfer(signer, receipent, value);
+        _transfer(sender, receipent, value);
         _approve(sender, signer, allowed.sub(value));
         if(reward>0){
             _transfer(signer, msg.sender, reward);
@@ -75,7 +75,7 @@ contract ColendiToken is ERC20 {
         return true;
     }
     function metaTransferFromHash(address sender, address receipent, uint256 value, uint256 nonce, uint256 reward) public view returns(bytes32){
-        return keccak256(abi.encodePacked(address(this),"metaTransferFrom", sender, receipent, value, nonce, reward));
+        return keccak256(abi.encodePacked(address(this),"metaTransferFrom", sender, receipent, value, nonce, reward)).toEthSignedMessageHash();
     }
 
     function recoverSigner(bytes32 messageHash, bytes memory signature) public view returns(address){
@@ -83,10 +83,31 @@ contract ColendiToken is ERC20 {
     }
 
     function approveAndCall(address target, uint256 amount, bytes memory data) public returns(bool) {
-        approve(target, amount);
         bool isSucceed;
+        approve(target, amount);
         (isSucceed, ) = target.call(data);
         require(isSucceed, "Transaction has been reverted");
         return true;
+    }
+
+
+    function metaApproveAndCall(bytes memory signature, address target, uint256 amount, bytes memory data, uint256 nonce, uint256 reward) public returns (bool) {
+        bool isSucceed;
+        bytes32 metaHash = metaApproveAndCallHash(target,amount,data,nonce,reward);
+        address signer = metaHash.recover(signature);
+        require(signer!=address(0));
+        require(nonce == currentNonce[signer]);
+        currentNonce[signer]++;
+        _approve(signer, target, amount);
+        (isSucceed, ) = target.call(data);
+        require(isSucceed, "Transaction has been reverted");
+        if(reward>0){
+            _transfer(signer, msg.sender, reward);
+        }
+        return true;
+
+    }
+    function metaApproveAndCallHash(address target, uint256 amount, bytes memory data, uint256 nonce, uint256 reward) public view returns(bytes32){
+        return keccak256(abi.encodePacked(address(this),"metaApproveAndCall", target, amount, data, nonce, reward)).toEthSignedMessageHash();
     }
 }
