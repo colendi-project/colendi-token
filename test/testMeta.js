@@ -44,14 +44,12 @@ contract("ColendiToken", (accounts) => {
                 });
                 const transferAmount = new BN(9e7)
                 const rewardAmount = new BN(1e7)
-                const gasLimit = new BN(1e5);
                 const method = "metaTransfer"
                 const args = [
                     receiver,
                     web3.utils.toTwosComplement(transferAmount),
                     web3.utils.toTwosComplement(nonce),
                     web3.utils.toTwosComplement(rewardAmount),
-                    web3.utils.toTwosComplement(gasLimit)
                 ]
 
                 const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
@@ -76,14 +74,12 @@ contract("ColendiToken", (accounts) => {
                 });
                 const transferAmount = baseAmount;
                 const rewardAmount = baseAmount.divn(10);
-                const gasLimit = new BN(1e5);
                 const method = "metaTransfer"
                 const args = [
                     receiver,
                     web3.utils.toTwosComplement(transferAmount),
                     web3.utils.toTwosComplement(nonce),
                     web3.utils.toTwosComplement(rewardAmount),
-                    web3.utils.toTwosComplement(gasLimit)
                 ]
 
                 const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
@@ -107,7 +103,6 @@ contract("ColendiToken", (accounts) => {
                 const nonce = await this.token.currentNonce(etherlessAddress);
                 const allowanceAmount = new BN(9e7)
                 const rewardAmount = new BN(1e7)
-                const gasLimit = new BN(2e5);
 
                 // etherless account should have tokens gte rewardAmount
                 await this.token.transfer(etherlessAddress, rewardAmount, {
@@ -120,7 +115,6 @@ contract("ColendiToken", (accounts) => {
                     web3.utils.toTwosComplement(allowanceAmount),
                     web3.utils.toTwosComplement(nonce),
                     web3.utils.toTwosComplement(rewardAmount),
-                    web3.utils.toTwosComplement(gasLimit),
                 ]
 
                 const messageHash = web3.utils.soliditySha3(this.token.address, method, ...args);
@@ -145,7 +139,6 @@ contract("ColendiToken", (accounts) => {
                 const nonce = await this.token.currentNonce(etherlessAddress);
                 const transferAmount = new BN(9e7)
                 const rewardAmount = new BN(1e7)
-                const gasLimit = new BN(2e5);
 
                 // etherless account should have allowance
                 await this.token.approve(etherlessAddress, transferAmount, {
@@ -164,7 +157,6 @@ contract("ColendiToken", (accounts) => {
                     web3.utils.toTwosComplement(transferAmount),
                     web3.utils.toTwosComplement(nonce),
                     web3.utils.toTwosComplement(rewardAmount),
-                    web3.utils.toTwosComplement(gasLimit),
 
                 ]
 
