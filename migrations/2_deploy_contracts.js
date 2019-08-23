@@ -8,7 +8,7 @@ const argv = require('minimist')(process.argv.slice(2), { string: ['env'] });
 module.exports = function (deployer) {
   const currentStage = argv['env'];
   
-  // For development
+  // Without SSM INTEGRATION
   if (!currentStage) {
     console.log("Deploying on Development")
     deployer.deploy(ColendiToken)
@@ -40,13 +40,13 @@ module.exports = function (deployer) {
         }
       };
 
-      client.put(params, (error) => {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log(params.Item);
-        }
-      });
+      // client.put(params, (error) => {
+      //   if (error) {
+      //     console.log(error);
+      //   } else {
+      //     console.log(params.Item);
+      //   }
+      // });
     })
   }
 };

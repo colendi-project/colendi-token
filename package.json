@@ -5,10 +5,8 @@
   "main": "truffle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-kovan": "truffle migrate --network kovan --reset",
-    "start:dev": "NODE_ENV=dev node utils/setEnv.js",
-    "start:stage": "NODE_ENV=stage node utils/setEnv.js ",
-    "start:prod": "NODE_ENV=prod node utils/setEnv.js"
+    "start:dev": "truffle migrate --network kovan --reset --dry-run",
+    "start:prod": "truffle migrate --network mainnet --reset --f 2"
   },
   "author": "Colendi",
   "license": "Apache-2.0",
