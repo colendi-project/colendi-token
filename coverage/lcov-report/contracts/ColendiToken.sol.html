@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts/ColendiToken.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> ColendiToken.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>43/43</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>16/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>13/13</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>45/45</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity ^0.5.8;
+&nbsp;
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-solidity/contracts/cryptography/ECDSA.sol";
+&nbsp;
+contract ColendiToken is ERC20 {
+&nbsp;
+    using ECDSA for bytes32;
+&nbsp;
+    string public name = "Colendi Token";
+&nbsp;
+    string public symbol = "COD";
+&nbsp;
+    uint8 public decimals = 18;
+&nbsp;
+    uint256 public INITIAL_SUPPLY = 1e9 * (10 ** uint256(decimals));
+&nbsp;
+    constructor() public {
+        _mint(msg.sender, INITIAL_SUPPLY);
+&nbsp;
+    }
+&nbsp;
+    /// @dev User to Current Nonces
+    mapping(address =&gt; uint256) public currentNonce;
+&nbsp;
+    function metaTransfer(bytes calldata signature, address to, uint256 value, uint256 nonce, uint256 reward)
+    external returns (bool) {
+        bytes32 metaHash = metaTransferHash(to,value,nonce,reward);
+        address signer = checkSignatureAndPayReward(metaHash, signature, nonce, reward);
+        _transfer(signer, to, value);
+        return true;
+    }
+    function metaTransferHash(address to, uint256 value, uint256 nonce, uint256 reward) public view returns(bytes32){
+        return keccak256(abi.encodePacked(address(this),"metaTransfer", to, value, nonce, reward)).toEthSignedMessageHash();
+    }
+&nbsp;
+    function metaApprove(bytes calldata signature, address spender, uint256 value, uint256 nonce, uint256 reward)
+    external returns (bool) {
+        bytes32 metaHash = metaApproveHash(spender,value,nonce,reward);
+        address signer = checkSignatureAndPayReward(metaHash, signature, nonce, reward);
+        _approve(signer, spender, value);
+        return true;
+&nbsp;
+    }
+    function metaApproveHash(address spender, uint256 value, uint256 nonce, uint256 reward) public view returns(bytes32){
+        return keccak256(abi.encodePacked(address(this),"metaApprove", spender, value, nonce, reward)).toEthSignedMessageHash();
+    }
+&nbsp;
+    function metaTransferFrom(
+        bytes calldata signature,address sender,address recipient,uint256 value,uint256 nonce,uint256 reward
+    ) external returns (bool)
+    {
+        bytes32 metaHash = metaTransferFromHash(sender, recipient,value,nonce,reward);
+        address signer = checkSignatureAndPayReward(metaHash, signature, nonce, reward);
+        uint256 allowed = allowance(sender,signer);
+        _transfer(sender, recipient, value);
+        _approve(sender, signer, allowed.sub(value));
+        return true;
+    }
+    function metaTransferFromHash(address sender, address recipient, uint256 value, uint256 nonce, uint256 reward)
+    public view returns(bytes32){
+        return keccak256(
+            abi.encodePacked(address(this),"metaTransferFrom", sender, recipient, value, nonce, reward)
+            ).toEthSignedMessageHash();
+    }
+&nbsp;
+    function recoverSigner(bytes32 messageHash, bytes calldata signature) external pure returns(address){
+        return messageHash.recover(signature);
+    }
+&nbsp;
+    function approveAndCall(address target, uint256 amount, bytes calldata data) external returns(bool) {
+        approve(target, amount);
+        (bool isSucceed, ) = target.call(data);
+        require(isSucceed, "Transaction has been reverted");
+        return true;
+    }
+&nbsp;
+    function metaApproveAndCall(
+        bytes calldata signature, address target, uint256 amount, bytes calldata data, uint256 nonce, uint256 reward, uint256 gasLimit
+        ) external returns (bool) {
+        uint256 startGas = gasleft();
+        bytes32 metaHash = metaApproveAndCallHash(target,amount,data,nonce,reward,gasLimit);
+        address signer = checkSignatureAndPayReward(metaHash, signature, nonce, reward, startGas, gasLimit);
+        _approve(signer, target, amount);
+        target.call(data);
+        return true;
+&nbsp;
+    }
+    function metaApproveAndCallHash(address target, uint256 amount, bytes memory data, uint256 nonce, uint256 reward, uint256 gasLimit)
+    public view returns(bytes32){
+        return keccak256(
+            abi.encodePacked(address(this),"metaApproveAndCall", target, amount, data, nonce, reward, gasLimit)
+            ).toEthSignedMessageHash();
+    }
+    function checkSignatureAndPayReward(
+        bytes32 metaHash, bytes memory signature, uint256 nonce, uint256 reward, uint256 startGas, uint256 gasLimit
+    ) internal returns (address) {
+        address signer = metaHash.recover(signature);
+        require(startGas&gt;=gasLimit,"Not enough gas provided by relayer");
+        require(signer!=address(0), "ZERO_ADDRESS can not be signer");
+        require(nonce == currentNonce[signer], "Can not execute replay attack");
+        currentNonce[signer]++;
+        if(reward&gt;0){
+            _transfer(signer, msg.sender, reward);
+        }
+&nbsp;
+        return signer;
+    }
+&nbsp;
+    function checkSignatureAndPayReward(
+        bytes32 metaHash, bytes memory signature, uint256 nonce, uint256 reward) internal returns (address) {
+        address signer = metaHash.recover(signature);
+        require(signer!=address(0), "ZERO_ADDRESS can not be signer");
+        require(nonce == currentNonce[signer], "Can not execute replay attack");
+        currentNonce[signer]++;
+        if(reward&gt;0){
+            _transfer(signer, msg.sender, reward);
+        }
+&nbsp;
+        return signer;
+    }
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Oct 22 2019 12:13:19 GMT+0300 (GMT+03:00)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
