@@ -12,6 +12,13 @@ module.exports = {
             port: 8545,
             network_id: "*"
         },
+        coverage: {
+            host: "localhost",
+            network_id: "*",
+            port: 8545, // <-- If you change this, also set the port option in .solcover.js.
+            gas: gasAmount, // <-- Use this high gas value
+            gasPrice: gasPrice // <-- Use this low gas price
+        },
         kovan: {
             gasPrice: gasPrice,
             gas: gasAmount,

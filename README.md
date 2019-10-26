@@ -27,8 +27,8 @@ In addition to these proposals, the organizations are built like The Gas Station
 ## Table of Contents
 | Network  | Address  |
 |---|---|
-|  Mainnet | TBA |
-| Kovan | 0x8375383B58124E6e76Fc422FF8014Ef6Ad1382E7 |
+|  Mainnet | 0xf2ccd161f06d88479b50d4bedbad9992dbdaffdd |
+| Kovan | 0x35A19cdAE55bFc0F7f63e38a2c97732bB927E5d7 |
 
 - [Colendi Token](#Colendi-Token)
   - [Table of Contents](#Table-of-Contents)
@@ -40,8 +40,7 @@ In addition to these proposals, the organizations are built like The Gas Station
       - [approveAndCall](#approveAndCall)
       - [metaApproveAndCall](#metaApproveAndCall)
   - [Getting Started](#Getting-Started)
-    - [Without Continous Integration](#Without-Continous-Integration)
-    - [Enabling Continous Integration](#Enabling-Continous-Integration)
+    - [Contract Compilation, Migration and Tests](#Contract-Compilation-Migration-and-Tests)
     - [Prerequisites](#Prerequisites)
     - [Related Docs](#Related-Docs)
   - [API Reference](#API-Reference)
@@ -58,7 +57,7 @@ The features of Colendi Token are as follows:
 |  Name | Colendi Token |
 | Symbol | COD |
 | Decimal | 18 |
-| Supply | 2000000000 |
+| Supply | 1000000000 |
 
 ### Methods
 
@@ -94,11 +93,10 @@ This methods allows executing approveAndCall method without having ETH.
 ```
 * Considering common programming paradigms, we integrated our contract deployment within continuous integration practice. The developers can also benefit from the pattern we followed. And, you can also choose to continue without configuring AWS or similar services.
 
-### Without Continous Integration
+### Contract Compilation, Migration and Tests
 Export environment variables
 ```
-    export infuraURLKovan="INFURA_URL"
-    export infuraKeyKovan="INFURA_KEY"
+    export infuraKey="INFURA_KEY"
     export mnemonic="MNEMONIC MNEMONIC ..."
     export gasPrice="2000000000"
     export gasAmount="6000000"
@@ -114,27 +112,17 @@ You can deploy the contract to Kovan, Rinkeby, Ropsten, Mainnet or local ganache
     truffle migrate --network rinkeby --reset
 ```
 
-### Enabling Continous Integration
-
-The integration and environment management is an import concern. It allows us to reduce time cost of development for client-side. We use the following tools :
-* AWS Systems Manager Parameter Store : for configuration data management and secrets management
-* AWS Code Pipeline : Continous delivery service that automates releases.
-
-Before starting you have to define following secrets into AWS parameter store.
+You can test your contract after running a local ganache network.
 ```
-MNEMONIC
-INFURA_URL_KOVAN
-INFURA_KEY_KOVAN
-gasPrice
-gasAmount
-CONTRACTS_TABLE
+    > ganache-cli
+    > truffle-test
 ```
 
-Then you can just run following command which will deploy the contracts and export ABI and adress of the contract to DynamoDB. For development environment;
+Alternatively, you can test using `solidity-coverage` with following command and get coverage report along with tests.
 ```
-npm run start:dev
-yarn start:dev
+    > ./node_modules/.bin/solidity-coverage
 ```
+
 ### Prerequisites
 
 * Node-js (Above version 8)
@@ -142,10 +130,6 @@ yarn start:dev
 
 ### Related Docs
 * [Truffle](https://truffleframework.com/)
-* [Code Pipeline](https://aws.amazon.com/codepipeline/)
-* [Code Build](https://aws.amazon.com/codebuild/)
-* [DynamoDB](https://aws.amazon.com/dynamodb/)
-* [Parameter Store](https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-paramstore.html)
 * [ERC-20 Standard](https://eips.ethereum.org/EIPS/eip-20)
 
 
