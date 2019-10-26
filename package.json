@@ -5,25 +5,21 @@
   "main": "truffle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-kovan": "truffle migrate --network kovan --reset",
-    "start:dev": "NODE_ENV=dev node utils/setEnv.js",
-    "start:stage": "NODE_ENV=stage node utils/setEnv.js ",
-    "start:prod": "NODE_ENV=prod node utils/setEnv.js"
+    "start:dev": "truffle migrate --network kovan --reset --f 2",
+    "start:prod": "truffle migrate --network mainnet --reset --f 2"
   },
   "author": "Colendi",
   "license": "Apache-2.0",
   "dependencies": {
-    "aws-sdk": "^2.395.0",
-    "ganache-cli": "^6.4.1",
-    "minimist": "^1.2.0",
     "openzeppelin-solidity": "2.3.0",
-    "shelljs": "^0.8.3",
     "truffle": "^5.0.3",
     "truffle-hdwallet-provider": "^1.0.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "faker": "^4.1.0",
     "openzeppelin-test-helpers": "^0.3.0",
+    "solidity-coverage": "^0.6.7",
     "truffle-assertions": "^0.5.0"
   }
 }
