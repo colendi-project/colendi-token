@@ -1,6 +1,5 @@
 const HDWalletProvider = require("truffle-hdwallet-provider");
 
-const providerUrl = process.env.INFURA_URL_KOVAN;
 const providerKey = process.env.INFURA_KEY_KOVAN;
 const mnemonic = process.env.MNEMONIC;
 const gasPrice = process.env.GAS_PRICE;
@@ -13,11 +12,18 @@ module.exports = {
             port: 8545,
             network_id: "*"
         },
+        coverage: {
+            host: "localhost",
+            network_id: "*",
+            port: 8545, // <-- If you change this, also set the port option in .solcover.js.
+            gas: gasAmount, // <-- Use this high gas value
+            gasPrice: gasPrice // <-- Use this low gas price
+        },
         kovan: {
             gasPrice: gasPrice,
             gas: gasAmount,
             provider: () => {
-                return new HDWalletProvider(mnemonic, (providerUrl + providerKey));
+                return new HDWalletProvider(mnemonic, ("https://kovan.infura.io/v3/" + providerKey));
             },
             network_id: 42
         },
@@ -25,7 +31,7 @@ module.exports = {
             gasPrice: gasPrice,
             gas: gasAmount,
             provider: () => {
-                return new HDWalletProvider(mnemonic, (providerUrl + providerKey));
+                return new HDWalletProvider(mnemonic, ("https://rinkeby.infura.io/v3/" + providerKey));
             },
             network_id: 4
         },
@@ -33,7 +39,7 @@ module.exports = {
             gasPrice: gasPrice,
             gas: gasAmount,
             provider: () => {
-                return new HDWalletProvider(mnemonic, (providerUrl + providerKey));
+                return new HDWalletProvider(mnemonic, ("https://ropsten.infura.io/v3/" + providerKey));
             },
             network_id: 3
         },
@@ -41,9 +47,10 @@ module.exports = {
             gasPrice: gasPrice,
             gas: gasAmount,
             provider: () => {
-                return new HDWalletProvider(mnemonic, (providerUrl + providerKey));
+                return new HDWalletProvider(mnemonic, ("https://mainnet.infura.io/v3/" + providerKey));
             },
-            network_id: 1
+            network_id: 1,
+            skipDryRun: true
         },
     },
     mocha: {
@@ -61,7 +68,7 @@ module.exports = {
             docker: false, // Use "0.5.1" you've installed locally with docker (default: false)
             settings: { // See the solidity docs for advice about optimization and evmVersion
                 optimizer: {
-                    enabled: false,
+                    enabled: true,
                     runs: 200
                 },
                 evmVersion: "byzantium"
@@ -69,3 +76,4 @@ module.exports = {
         }
     }
 };
+
